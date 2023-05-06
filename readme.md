@@ -24,6 +24,13 @@ To use the app, follow these steps:
 5. If there are no users left in the list, you will see a message indicating that the set is empty.
 6. To stop the app, press Ctrl + C in the terminal window where it's running.
 
+# Demo
+* Adding to list
+![img.png](img.png)
+* Updated list
+![img_1.png](img_1.png)
+* Deleting from list
+![img_2.png](img_2.png)
 # Contributing
 If you'd like to contribute to this project, you can:
 
