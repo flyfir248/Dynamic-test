@@ -2,34 +2,52 @@
 <html>
   <head>
     <title>User List</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='res/favicon.png') }}">
     <style>
-      /* Center everything */
+      /* Center all text and elements */
       body {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        height: 100vh;
+        text-align: center;
       }
 
-      /* List styles */
-      ul {
+      /* User list styles */
+      .user-list {
         list-style: none;
         padding: 0;
         margin: 0;
+        display: inline-block;
+        text-align: left;
       }
 
-      li {
-        display: flex;
-        align-items: center;
-        margin-bottom: 10px;
+      .user-list li {
+        margin: 10px;
+        position: relative;
+        cursor: pointer;
+      }
+
+      .user-list li .delete-user {
+        display: none;
+        position: absolute;
+        top: 50%;
+        right: -60px;
+        transform: translateY(-50%);
+        background-color: #7289da;
+        color: #dcddde;
+        font-size: 16px;
+        font-weight: bold;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+
+      .user-list li:hover .delete-user {
+        display: block;
       }
 
       /* Form styles */
       form {
         margin-top: 20px;
-        display: flex;
-        align-items: center;
       }
 
       label {
@@ -60,63 +78,65 @@
       button[type="submit"]:hover {
         background-color: #677bc4;
       }
-
-      /* ID styles */
-      .id {
-        margin-left: 10px;
-        font-size: 14px;
-        font-weight: bold;
-        color: #7289da;
-      }
     </style>
   </head>
   <body>
+    <a href="https://pythonpythonme.netlify.app/index.html">
+    <div class="header-image">
+    <img src="https://pythonpythonme.netlify.app/PythonPythonME.png" alt="Header image">
+    </div>
+    </a>
+    <p></p>
+    <p></p>
+    <p></p>
     <h1>User List</h1>
-    <ul>
-      {% for user in users %}
-      <li>
-        {{ user['username'] }}
-        <span class="id">(ID: {{ user['id'] }})</span>
-        <form method="post" action="/users/delete">
-          <input type="hidden" name="user_id" value="{{ user['id'] }}">
-          <button type="submit">Delete</button>
-        </form>
-      </li>
-      {% endfor %}
-    </ul>
+    {% if users %}
+      <ul class="user-list">
+        {% for user in users %}
+          <li>
+            {{ user['username'] }} <span class="id">(ID: {{ user['id'] }})</span>
+            <form class="delete-user" method="post" action="/users/delete" onsubmit="return confirm('Are you sure you want to delete {{ user['username'] }}?')">
+              <input type="hidden" name="user_id" value="{{ user['id'] }}">
+              <button type="submit">Delete</button>
+            </form>
+          </li>
+        {% endfor %}
+      </ul>
+    {% else %}
+      <p>Set is empty. Add new users!</p>
+    {% endif %}
     <form method="post" action="/users/create">
       <label for="username">New User:</label>
       <input type="text" name="username">
       <button type="submit">Add</button>
     </form>
-    {% if not users %}
-    <p>No users left to be deleted!</p>
-    {% endif %}
-    <script>
-      const deleteButtons = document.querySelectorAll('form[action="/users/delete"] button');
-      deleteButtons.forEach(button => {
-        button.addEventListener('click', (event) => {
-          event.preventDefault();
-          const userId = button.previousSibling.value;
-          const confirmDelete = confirm(`Are you sure you want to delete user with ID ${userId}?`);
-          if (confirmDelete) {
-            fetch('/users/delete', {
-              method: 'POST',
-              body: JSON.stringify({user_id: userId}),
-              headers: {
-                'Content-Type': 'application/json'
-              }
-            })
-            .then(response => {
-              if (response.ok) {
-                window.location.href = '/';
-              } else {
-                alert('Error deleting user!');
-              }
-            });
-          }
-        });
-      });
-    </script>
+    <p></p>
+    <p></p>
+    <p></p>
+    <footer class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4">
+                    <h4>Anoop Johny 🤖</h4>
+                </div>
+            <div class="col-md-4 text-center">
+                <h4>Follow Me</h4>
+                <ul class="social-icons">
+                    <a href="https://www.linkedin.com/in/anoop-johny-30a746181/"><img src="{{ url_for('static', filename='res/linkedin.png') }}" alt="LinkedIn"></a>
+                    <a href="https://github.com/flyfir248"><img src="{{ url_for('static', filename='res/github.png') }}" alt="GitHub"></a>
+                    <a href="https://pythonpythonme.netlify.app/index.html"><img src="{{ url_for('static', filename='res/web.png') }}" alt="Website"></a>
+                    <a href="https://medium.com/@anoopjohny2000"><img src="{{ url_for('static', filename='res/medium.png') }}" alt="Medium"></a>
+                </ul>
+            </div>
+        </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <p class="text-muted">© 2023-2024 PythonPythonME.</p>
+                    <p>All rights reserved.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
   </body>
 </html>
