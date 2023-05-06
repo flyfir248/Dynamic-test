@@ -16,8 +16,8 @@ def index():
 @app.route('/users/create', methods=['POST'])
 def create_user():
     username = request.form['username']
-    # Create a new user with the given username and add it to the list of users
-    user_id = len(users) + 1
+    # Assign the next available user ID
+    user_id = max(user['id'] for user in users) + 1 if users else 1
     new_user = {'id': user_id, 'username': username}
     users.append(new_user)
     # Redirect the user back to the index page
