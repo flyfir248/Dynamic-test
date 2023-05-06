@@ -26,11 +26,17 @@ To use the app, follow these steps:
 
 # Demo
 * Adding to list
+* 
 ![img.png](img.png)
+
 * Updated list
+
 ![img_1.png](img_1.png)
+
 * Deleting from list
+
 ![img_2.png](img_2.png)
+
 # Contributing
 If you'd like to contribute to this project, you can:
 
